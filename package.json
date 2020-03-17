@@ -1,0 +1,59 @@
+{
+  "name": "contacts-list",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
+    "classnames": "^2.2.6",
+    "g": "^2.0.1",
+    "include-media": "^1.4.9",
+    "radium": "^0.26.0",
+    "react": "^16.12.0",
+    "react-app-polyfill": "^1.0.6",
+    "react-bootstrap": "^1.0.0-beta.16",
+    "react-countup": "^4.3.3",
+    "react-custom-scrollbars": "^4.2.1",
+    "react-dom": "^16.12.0",
+    "react-icons": "^3.9.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.2.0",
+    "react-select": "^3.0.8",
+    "react-sticky": "^6.0.3",
+    "react-transition-group": "^4.3.0",
+    "react-visibility-sensor": "^5.1.1",
+    "sass": "^1.23.7"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      "last 2 version",
+      "ie 10"
+    ],
+    "development": [
+      "last 2 version",
+      "ie 10"
+    ]
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "devDependencies": {},
+  "author": "Maxim Ilinyh",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maximilinyh/react_contacts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/maximilinyh/react_contacts/issues"
+  },
+  "homepage": "https://github.com/maximilinyh/react_contacts#readme"
+}

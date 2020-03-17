@@ -1,0 +1,104 @@
+// Required parts of Bootstrap
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+//vars
+//breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 768px,
+  md: 970px,
+  lg: 1240px
+);
+
+//container width
+$container-max-widths: (
+  sm: 768px,
+  md: 970px,
+  lg: 1240px
+);
+
+//custom vars
+
+//fonts
+$basic-font-family: "Roboto", sans-serif;
+$second-font-family: "Montserrat", sans-serif;
+$title-font-family: "Kaushan Script", cursive;
+
+//colors
+$main: #999999;
+$fir-red: #ed1c40;
+$fir-dark: #333;
+$fir-grey: #f8f8f8;
+
+//mixins
+@mixin button-variant($color, $background, $border, $border-width) {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+
+  &:focus,
+  &.focus {
+    color: $color;
+    background-color: darken($background, 10%);
+    border-color: darken($border, 25%);
+  }
+
+  &:hover {
+    color: $color;
+    background-color: darken($background, 10%);
+    border-color: darken($border, 12%);
+  }
+
+  &:active,
+  &.active,
+  .open > &.dropdown-toggle {
+    color: $color;
+    background-color: darken($background, 10%);
+    background-image: none;
+    border-color: darken($border, 12%);
+
+    &:hover,
+    &:focus,
+    &.focus {
+      color: $color;
+      background-color: darken($background, 17%);
+      border-color: darken($border, 25%);
+    }
+  }
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &:hover,
+    &:focus,
+    &.focus {
+      background-color: $background;
+      border-color: $border;
+    }
+  }
+
+  .badge {
+    color: $background;
+    background-color: $color;
+  }
+}
+
+// Mixin to create a bootstrap button with custom colors
+@mixin color-button($background) {
+  $color: #fff;
+  $border: 5%;
+
+  @if (lightness($background) >=lightness(#aaa)) {
+    $color: $background;
+    $border: 0.2 * lightness($background);
+  }
+
+  @include button-variant($color, $background, darken($background, $border));
+}
+
+//transition
+@mixin transition($transition-property, $transition-time, $method) {
+  transition: $transition-property $transition-time $method;
+}

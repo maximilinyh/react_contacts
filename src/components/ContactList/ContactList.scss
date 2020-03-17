@@ -1,0 +1,13 @@
+//import mixins-vars
+@import "../../mixins-vars";
+
+.ContactList {
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f7f7f7;
+  }
+
+  .table .thead-dark th {
+    background-color: #ed1c40;
+    border: none;
+  }
+}

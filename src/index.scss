@@ -1,0 +1,102 @@
+//import fonts
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700,800&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap");
+
+//import mixins-vars
+@import "./mixins-vars";
+
+//import bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+//body styles
+body,
+html {
+  font-family: $basic-font-family;
+  font-feature-settings: "liga" 0;
+  font-variant-ligatures: none;
+  color: $main;
+  background-color: #fff;
+  position: relative;
+  touch-action: manipulation;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+
+  @include media-breakpoint-up(md) {
+    font-size: 18px;
+  }
+}
+
+
+//inputs
+input.form-control {
+  border-radius: 0px;
+  height: 2.222rem;
+  font-size: 0.777rem;
+  line-height: 1.4rem;
+  padding: 0.722rem;
+  border: none;
+  border-radius: 30px;
+
+  &.active {
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);
+  }
+
+  &:focus {
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28),  inset 0 0 0 2px $fir-red;
+  }
+
+  &::-webkit-input-placeholder {
+    font-style: italic;
+    font-size: 0.833rem;
+    color: #ccc;
+    font-weight: 400;
+    line-height: 1.333rem;
+  }
+
+  &::-moz-placeholder {
+    font-style: italic;
+    font-size: 0.833rem;
+    color: #ccc;
+    font-weight: 400;
+    line-height: 1.333rem;
+  }
+
+  /* Firefox 19+ */
+  &:-moz-placeholder {
+    font-style: italic;
+    font-size: 0.833rem;
+    color: #ccc;
+    font-weight: 400;
+    line-height: 1.333rem;
+  }
+
+  /* Firefox 18- */
+  &:-ms-input-placeholder {
+    font-style: italic;
+    font-size: 0.833rem;
+    color: #ccc;
+    font-weight: 400;
+    line-height: 1.333rem;
+  }
+}
+
+.form-control:disabled, .form-control[readonly] {
+  background-color: transparent;
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+//buttons
+.btn {
+  border-radius: 0px;
+  min-height: 2.222rem;
+  font-size: 0.777rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.4rem;
+  padding: calc(0.722rem / 2) 0.722rem;
+}
+
