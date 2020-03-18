@@ -20,17 +20,18 @@ const  ContactList = () => {
 
     // useEffect hook
     useEffect(() => {
-        // database query
+        // data query
         const fetchData = async () => {
-            const url = await axios(
-                'http://demo.sibers.com/users',
-            );
-            setData(url.data);
+            try {
+                const url = await axios(
+                    'http://demo.sibers.com/users',
+                );
+                setData(url.data);
+            } catch (e) {
+                console.error(e);
+            }
         };
-        //error catch
-        fetchData(data).catch((error)=>{
-            console.log(error)
-        })
+        fetchData();
     }, []);
 
 
@@ -46,7 +47,6 @@ const  ContactList = () => {
             website={`www.${item.website}`}>
         </ContactListItem>
     ))
-
 
 
     //render component
@@ -73,11 +73,7 @@ const  ContactList = () => {
                         {searchVal.length > 0 ? contactItems: contactItems}
                         </tbody>
                     </table>
-
-
                 </div>
-
-
             </Container>
     );
 }

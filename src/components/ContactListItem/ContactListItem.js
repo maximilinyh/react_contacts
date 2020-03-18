@@ -11,10 +11,12 @@ function handlerChangeContactVal(event, setVal) {
     setVal(event.target.value);
 }
 
-//edit  input value in contact item handler fn
-function handlerEditVal(event, val, setVal) {
-    setVal(event.target.value);
+//edit  contact item handler fn
+function handlerEditVal(state, setState) {
+    setState(!state);
+    console.log(state)
 }
+
 
 
 //render component
@@ -23,31 +25,37 @@ const ContactListItem = (props) => {
     //readonly input initial  state
     const [readonly, setReadonly] = useState(true);
 
-    // input value initial state with localStorage
+    // get input value initial state in localStorage
     const [inputVal1, setInputVal1] = useState(localStorage.getItem(props.name));
     const [inputVal2, setInputVal2] = useState(localStorage.getItem(props.email));
     const [inputVal3, setInputVal3] = useState(localStorage.getItem(props.phone));
     const [inputVal4, setInputVal4] = useState(localStorage.getItem(props.website));
 
 
-    //save change input value in localStorage
+    // const [inputVal1, setInputVal1] = useState(props.name);
+    // const [inputVal2, setInputVal2] = useState(props.email);
+    // const [inputVal3, setInputVal3] = useState(props.phone);
+    // const [inputVal4, setInputVal4] = useState(props.website);
+
+
+    // save change input value in localStorage
     const handlerSaveVal = useCallback(() => {
         localStorage.setItem(props.name, inputVal1);
         localStorage.setItem(props.email, inputVal2);
         localStorage.setItem(props.phone, inputVal3);
         localStorage.setItem(props.website, inputVal4);
-        setReadonly(readonly);
         return [inputVal1, inputVal2, inputVal3, inputVal4];
     }, [props.name, props.email, props.phone, props.website, inputVal1, inputVal2, inputVal3, inputVal4]);
 
+
+
     //cancel change input value
     const handlerCancelVal = useCallback(() => {
-        setInputVal1( inputVal1, inputVal1);
+        setInputVal1(inputVal1, inputVal1);
         setInputVal2(inputVal2, inputVal2);
         setInputVal3(inputVal3, inputVal3);
         setInputVal4(inputVal4, inputVal4);
-        setReadonly(readonly);
-        return [props.name, props.email, props.phone, props.website];
+        return [props.name, props.email, props.phone, props.website, ];
     }, [props.name, props.email, props.phone, props.website]);
 
 
@@ -66,62 +74,75 @@ const ContactListItem = (props) => {
                 />
             </td>
             <td className='align-middle'>
-                <input
-                    onChange={(event)=>{
+                {readonly?
+                    <span>{inputVal1}</span>
+                    :
+                    <input
+                        onChange={(event)=>{
                         handlerChangeContactVal(event, setInputVal1)
-                    }}
-                    type="text"
-                    className={readonly? 'form-control': 'form-control active'}
-                    defaultValue={!inputVal1? inputVal1:inputVal1 }
-                    readOnly={readonly}
-                />
+                }}
+                        type="text"
+                        className='form-control active'
+                        defaultValue={!inputVal1? inputVal1:inputVal1 }
+                    />
+
+
+                }
             </td>
             <td className='align-middle' >
-                <input
-                    onChange={(event)=>{
-                        handlerChangeContactVal(event, setInputVal2)
-                    }}
-                    className={readonly? 'form-control': 'form-control active'}
-                    type="text"
-                    defaultValue={!inputVal2? inputVal2:inputVal2 }
-                    readOnly={readonly}
-                />
+                {readonly?
+                    <span>{inputVal2}</span>
+                    :
+                    <input
+                        onChange={(event)=>{
+                            handlerChangeContactVal(event, setInputVal2)
+                        }}
+                        className='form-control active'
+                        type="text"
+                        defaultValue={!inputVal2? inputVal2:inputVal2 }
+                    />
+                }
             </td>
             <td className='align-middle' >
-                <input
-                    onChange={(event)=>{
-                        handlerChangeContactVal(event, setInputVal3)
-                    }}
-                     className={readonly? 'form-control': 'form-control active'}
-                     type="text"
-                     defaultValue={!inputVal3? inputVal3:inputVal3 }
-                     readOnly={readonly}
-                />
+                {readonly?
+                    <span>{inputVal3}</span>
+                    :
+                    <input
+                        onChange={(event)=>{
+                            handlerChangeContactVal(event, setInputVal3)
+                        }}
+                        className='form-control active'
+                        type="text"
+                        defaultValue={!inputVal3? inputVal3:inputVal3 }
+                    />
+                }
             </td>
             <td className='align-middle'>
-      {          <input
-                    onChange={(event)=>{
-                        handlerChangeContactVal(event, setInputVal4)
-                    }}
-                    className={readonly? 'form-control': 'form-control active'}
-                    defaultValue={!inputVal4? inputVal4:inputVal4 }
-                    readOnly={readonly}
-                />}
+                { readonly?
+                    <span>{inputVal4}</span>
+                    :
+                    <input
+                        onChange={(event)=>{
+                            handlerChangeContactVal(event, setInputVal4)
+                        }}
+                        className='form-control active'
+                        defaultValue={!inputVal4? inputVal4:inputVal4 }
+                    />
+                }
             </td>
             <td className='align-middle'>
                 {readonly?
-
                     <ButtonEdit
-                        handlerEventEdit={(event)=> {handlerEditVal(event, readonly, setReadonly )}}
-                    />:
+                        handlerEventEdit={(event)=> {handlerEditVal(readonly, setReadonly )}}
+                    />
+                    :
+                    <><ButtonSave
+                            handlerEventSave={(event)=> {handlerSaveVal(); handlerEditVal(readonly, setReadonly )}}
+                        />
 
-                    <>
-                    <ButtonSave
-                        handlerEventSave={(event)=> {handlerSaveVal()}}
-                    />
-                    <ButtonCancel
-                        handlerEventEdit={(event)=> {handlerCancelVal()}}
-                    />
+                        <ButtonCancel
+                            handlerEventEdit={(event)=> {handlerCancelVal(); handlerEditVal(readonly, setReadonly )}}
+                        />
                     </>
 
                 }
