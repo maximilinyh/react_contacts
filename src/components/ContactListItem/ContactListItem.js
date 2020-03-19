@@ -26,16 +26,16 @@ const ContactListItem = (props) => {
     const [readonly, setReadonly] = useState(true);
 
     // get input value initial state in localStorage
-    const [inputVal1, setInputVal1] = useState(localStorage.getItem(props.name));
-    const [inputVal2, setInputVal2] = useState(localStorage.getItem(props.email));
-    const [inputVal3, setInputVal3] = useState(localStorage.getItem(props.phone));
-    const [inputVal4, setInputVal4] = useState(localStorage.getItem(props.website));
 
+    // const [inputVal1, setInputVal1] = useState(localStorage.getItem(props.name));
+    // const [inputVal2, setInputVal2] = useState(localStorage.getItem(props.email));
+    // const [inputVal3, setInputVal3] = useState(localStorage.getItem(props.phone));
+    // const [inputVal4, setInputVal4] = useState(localStorage.getItem(props.website));
 
-    // const [inputVal1, setInputVal1] = useState(props.name);
-    // const [inputVal2, setInputVal2] = useState(props.email);
-    // const [inputVal3, setInputVal3] = useState(props.phone);
-    // const [inputVal4, setInputVal4] = useState(props.website);
+    const [inputVal1, setInputVal1] = useState(props.name);
+    const [inputVal2, setInputVal2] = useState(props.email);
+    const [inputVal3, setInputVal3] = useState(props.phone);
+    const [inputVal4, setInputVal4] = useState(props.website);
 
 
     // save change input value in localStorage

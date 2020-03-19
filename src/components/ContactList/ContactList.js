@@ -25,13 +25,16 @@ const  ContactList = () => {
             try {
                 const url = await axios(
                     'http://demo.sibers.com/users',
-                );
+                )
+                localStorage.setItem('data', JSON.stringify(url.data));
                 setData(url.data);
+                console.log(data)
             } catch (e) {
                 console.error(e);
             }
         };
         fetchData();
+
     }, []);
 
 
