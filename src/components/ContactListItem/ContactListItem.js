@@ -1,4 +1,4 @@
-import React, {useState, useCallback } from "react";
+import React, {useState, useCallback, useEffect} from "react";
 import ButtonEdit from "../ButtonEdit/ButtonEdit";
 import ButtonSave from "../ButtonSave/ButtonSave";
 import ButtonCancel from "../ButtonCancel/ButtonCancel";
@@ -14,31 +14,38 @@ function handlerChangeContactVal(event, setVal) {
 //edit  contact item handler fn
 function handlerEditVal(state, setState) {
     setState(!state);
-    console.log(state)
 }
-
-
 
 //render component
 const ContactListItem = (props) => {
 
-    //readonly input initial  state
+    //readonly for row initial  state
     const [readonly, setReadonly] = useState(true);
 
-    // get input value initial state in localStorage
-
-    // const [inputVal1, setInputVal1] = useState(localStorage.getItem(props.name));
-    // const [inputVal2, setInputVal2] = useState(localStorage.getItem(props.email));
-    // const [inputVal3, setInputVal3] = useState(localStorage.getItem(props.phone));
-    // const [inputVal4, setInputVal4] = useState(localStorage.getItem(props.website));
-
-    const [inputVal1, setInputVal1] = useState(props.name);
-    const [inputVal2, setInputVal2] = useState(props.email);
-    const [inputVal3, setInputVal3] = useState(props.phone);
-    const [inputVal4, setInputVal4] = useState(props.website);
+    // set  initial value in localStorage
+    //  useEffect(()=>{
+    //     localStorage.setItem(props.name, props.name);
+    //     localStorage.setItem(props.email, props.email);
+    //     localStorage.setItem(props.phone, props.phone);
+    //     localStorage.setItem(props.website, props.website);
+    // }, [props.name, props.email, props.phone, props.website])
 
 
-    // save change input value in localStorage
+
+
+    const [inputVal1, setInputVal1] = useState(localStorage.getItem(props.name) || '');
+    const [inputVal2, setInputVal2] = useState(localStorage.getItem(props.email) || '');
+    const [inputVal3, setInputVal3] = useState(localStorage.getItem(props.phone)|| '');
+    const [inputVal4, setInputVal4] = useState(localStorage.getItem(props.website)|| '');
+
+
+    //const [inputVal1, setInputVal1] = useState(props.name);
+    //const [inputVal2, setInputVal2] = useState(props.email);
+    //const [inputVal3, setInputVal3] = useState(props.phone);
+    //const [inputVal4, setInputVal4] = useState(props.website);
+
+
+    // set change input value in localStorage
     const handlerSaveVal = useCallback(() => {
         localStorage.setItem(props.name, inputVal1);
         localStorage.setItem(props.email, inputVal2);
@@ -50,18 +57,18 @@ const ContactListItem = (props) => {
 
 
     //cancel change input value
-    const handlerCancelVal = useCallback(() => {
-        setInputVal1(inputVal1, inputVal1);
-        setInputVal2(inputVal2, inputVal2);
-        setInputVal3(inputVal3, inputVal3);
-        setInputVal4(inputVal4, inputVal4);
-        return [props.name, props.email, props.phone, props.website, ];
-    }, [props.name, props.email, props.phone, props.website]);
+    // const handlerCancelVal = useCallback(() => {
+    //     setInputVal1(inputVal1, inputVal1);
+    //     setInputVal2(inputVal2, inputVal2);
+    //     setInputVal3(inputVal3, inputVal3);
+    //     setInputVal4(inputVal4, inputVal4);
+    //     return [props.name, props.email, props.phone, props.website, ];
+    // }, [props.name, props.email, props.phone, props.website]);
 
 
 
     return(
-        <tr className='list-item'>
+        <tr className='list-item' id={props.id}>
             <th className='align-middle'
                 scope="row">
                 {props.num}
@@ -83,7 +90,7 @@ const ContactListItem = (props) => {
                 }}
                         type="text"
                         className='form-control active'
-                        defaultValue={!inputVal1? inputVal1:inputVal1 }
+                        defaultValue={inputVal1}
                     />
 
 
@@ -99,7 +106,7 @@ const ContactListItem = (props) => {
                         }}
                         className='form-control active'
                         type="text"
-                        defaultValue={!inputVal2? inputVal2:inputVal2 }
+                        defaultValue={inputVal2}
                     />
                 }
             </td>
@@ -113,7 +120,7 @@ const ContactListItem = (props) => {
                         }}
                         className='form-control active'
                         type="text"
-                        defaultValue={!inputVal3? inputVal3:inputVal3 }
+                        defaultValue={inputVal3}
                     />
                 }
             </td>
@@ -126,7 +133,7 @@ const ContactListItem = (props) => {
                             handlerChangeContactVal(event, setInputVal4)
                         }}
                         className='form-control active'
-                        defaultValue={!inputVal4? inputVal4:inputVal4 }
+                        defaultValue={inputVal4}
                     />
                 }
             </td>
@@ -141,7 +148,8 @@ const ContactListItem = (props) => {
                         />
 
                         <ButtonCancel
-                            handlerEventEdit={(event)=> {handlerCancelVal(); handlerEditVal(readonly, setReadonly )}}
+                            handlerEventEdit={
+                                (event)=> {handlerEditVal(readonly, setReadonly )}}
                         />
                     </>
 

@@ -13,36 +13,49 @@ function handlerSearchContact (event, setVal) {
 
 const  ContactList = () => {
     //hook fetch data
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
 
     //hook search value
     const [searchVal, setSearchVal] = useState('');
 
-    // useEffect hook
+    // data query
     useEffect(() => {
-        // data query
         const fetchData = async () => {
             try {
                 const url = await axios(
                     'http://demo.sibers.com/users',
                 )
+                // setData(url.data);
+                //stringify data to JSON
                 localStorage.setItem('data', JSON.stringify(url.data));
-                setData(url.data);
-                console.log(data)
             } catch (e) {
                 console.error(e);
             }
         };
         fetchData();
-
     }, []);
+
+    // parse JSON data
+    let resultDataObj = [];
+
+    try {
+        resultDataObj = JSON.parse(localStorage.getItem('data')|| [])
+    }
+    catch (e) {
+        console.error(e);
+    }
+
+
+    let obj ={ ...resultDataObj};
+
 
 
     // contact items render cycle with filter by name
-    const contactItems = data.filter(({name}) => name.toLowerCase().match( searchVal )).map((item, index) => (
+    const contactItems = resultDataObj.filter(({name}) => name.toLowerCase().match( searchVal )).map((item) => (
         <ContactListItem
-            key={index}
-            num = {index + 1}
+            id={item.id}
+            key={item.id}
+            num = {item.id + 1}
             avatar = {item.avatar}
             name={item.name}
             email={item.email}
@@ -51,7 +64,6 @@ const  ContactList = () => {
         </ContactListItem>
     ))
 
-
     //render component
     return (
             <Container>
@@ -59,6 +71,10 @@ const  ContactList = () => {
                     onSearchHandler={(event)=> {handlerSearchContact(event, setSearchVal)}}
                     defaultValue={searchVal}
                 />
+                <button onClick={()=>{localStorage.clear()}}>Clear</button>
+                <button onClick={()=>{
+                    var _lsTotal=0,_xLen,_x;for(_x in localStorage){ if(!localStorage.hasOwnProperty(_x)){continue;} _xLen= ((localStorage[_x].length + _x.length)* 2);_lsTotal+=_xLen; console.log(_x.substr(0,50)+" = "+ (_xLen/1024).toFixed(2)+" KB")};console.log("Total = " + (_lsTotal / 1024).toFixed(2) + " KB");
+                }}>Check space</button>
                 <div className='ContactList table-responsive '>
                     <table className="table table-striped">
                         <thead className='thead-dark'>
