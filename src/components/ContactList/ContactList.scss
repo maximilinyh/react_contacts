@@ -1,7 +1,7 @@
 //import mixins-vars
 @import "../../mixins-vars";
 
-.ContactList {
+.contact-list {
   .table-striped tbody tr:nth-of-type(odd) {
     background-color: #f7f7f7;
   }

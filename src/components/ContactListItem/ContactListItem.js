@@ -1,74 +1,57 @@
-import React, {useState, useCallback, useEffect} from "react";
+import React, {useState, useCallback} from "react";
 import ButtonEdit from "../ButtonEdit/ButtonEdit";
 import ButtonSave from "../ButtonSave/ButtonSave";
 import ButtonCancel from "../ButtonCancel/ButtonCancel";
 import "./ContactListItem.scss";
-
-
+import LocalStorage from "../../LocalStorage";
 
 //change  input value in contact item handler fn
 function handlerChangeContactVal(event, setVal) {
     setVal(event.target.value);
 }
 
-//edit  contact item handler fn
+//edit contact item handler fn
 function handlerEditVal(state, setState) {
     setState(!state);
 }
+//instance LocalStorage Class
+const storage = new LocalStorage('data');
 
 //render component
 const ContactListItem = (props) => {
 
-    //readonly for row initial  state
+    //edit state
     const [readonly, setReadonly] = useState(true);
 
-    // set  initial value in localStorage
-    //  useEffect(()=>{
-    //     localStorage.setItem(props.name, props.name);
-    //     localStorage.setItem(props.email, props.email);
-    //     localStorage.setItem(props.phone, props.phone);
-    //     localStorage.setItem(props.website, props.website);
-    // }, [props.name, props.email, props.phone, props.website])
+    //get storage keys object
+    const contacts = storage.getStorageKey(props.id);
+
+    // get initial keys from  localStorage
+    const [inputVal1, setInputVal1] = useState(contacts.name || '');
+    const [inputVal2, setInputVal2] = useState(contacts.email || '');
+    const [inputVal3, setInputVal3] = useState(contacts.phone|| '');
+    const [inputVal4, setInputVal4] = useState(contacts.website|| '');
 
 
-
-
-    const [inputVal1, setInputVal1] = useState(localStorage.getItem(props.name) || '');
-    const [inputVal2, setInputVal2] = useState(localStorage.getItem(props.email) || '');
-    const [inputVal3, setInputVal3] = useState(localStorage.getItem(props.phone)|| '');
-    const [inputVal4, setInputVal4] = useState(localStorage.getItem(props.website)|| '');
-
-
-    //const [inputVal1, setInputVal1] = useState(props.name);
-    //const [inputVal2, setInputVal2] = useState(props.email);
-    //const [inputVal3, setInputVal3] = useState(props.phone);
-    //const [inputVal4, setInputVal4] = useState(props.website);
-
-
-    // set change input value in localStorage
+    // save changes input value in localStorage
     const handlerSaveVal = useCallback(() => {
-        localStorage.setItem(props.name, inputVal1);
-        localStorage.setItem(props.email, inputVal2);
-        localStorage.setItem(props.phone, inputVal3);
-        localStorage.setItem(props.website, inputVal4);
-        return [inputVal1, inputVal2, inputVal3, inputVal4];
-    }, [props.name, props.email, props.phone, props.website, inputVal1, inputVal2, inputVal3, inputVal4]);
+        storage.setStorageKey(props.id, inputVal1, inputVal2, inputVal3, inputVal4);
+        return [props.id, inputVal1, inputVal2, inputVal3, inputVal4];
+    }, [props.id, inputVal1, inputVal2, inputVal3, inputVal4]);
 
-
-
-    //cancel change input value
-    // const handlerCancelVal = useCallback(() => {
-    //     setInputVal1(inputVal1, inputVal1);
-    //     setInputVal2(inputVal2, inputVal2);
-    //     setInputVal3(inputVal3, inputVal3);
-    //     setInputVal4(inputVal4, inputVal4);
-    //     return [props.name, props.email, props.phone, props.website, ];
-    // }, [props.name, props.email, props.phone, props.website]);
+    //cancel changes input value
+    const handlerCancelVal = useCallback(() => {
+        setInputVal1(contacts.name, contacts.name);
+        setInputVal2(contacts.email, contacts.email);
+        setInputVal3(contacts.phone, contacts.phone);
+        setInputVal4(contacts.website, contacts.website);
+        return [contacts.name, contacts.email, contacts.phone, contacts.website];
+    }, [contacts.name, contacts.email, contacts.phone, contacts.website]);
 
 
 
     return(
-        <tr className='list-item' id={props.id}>
+        <tr className='list-item'>
             <th className='align-middle'
                 scope="row">
                 {props.num}
@@ -149,7 +132,7 @@ const ContactListItem = (props) => {
 
                         <ButtonCancel
                             handlerEventEdit={
-                                (event)=> {handlerEditVal(readonly, setReadonly )}}
+                                (event)=> {handlerEditVal(readonly, setReadonly ); handlerCancelVal()}}
                         />
                     </>
 
