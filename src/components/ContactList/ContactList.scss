@@ -2,12 +2,10 @@
 @import "../../mixins-vars";
 
 .contact-list {
-  .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #f7f7f7;
-  }
-
-  .table .thead-dark th {
-    background-color: #ed1c40;
-    border: none;
+  .list-item {
+    padding: 1.111rem;
+    &:nth-child(odd) {
+      background-color: #f7f7f7;
+    }
   }
 }

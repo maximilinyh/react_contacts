@@ -4,6 +4,9 @@ import ButtonSave from "../ButtonSave/ButtonSave";
 import ButtonCancel from "../ButtonCancel/ButtonCancel";
 import "./ContactListItem.scss";
 import LocalStorage from "../../LocalStorage";
+import NoPhotoImage from "../../assets/img/nophoto.jpg";
+
+
 
 //change  input value in contact item handler fn
 function handlerChangeContactVal(event, setVal) {
@@ -14,8 +17,17 @@ function handlerChangeContactVal(event, setVal) {
 function handlerEditVal(state, setState) {
     setState(!state);
 }
+
+
+//error 403 default image handler fn
+function handleImgError(event, src) {
+    event.target.src= src;
+}
+
+
 //instance LocalStorage Class
 const storage = new LocalStorage('data');
+
 
 //render component
 const ContactListItem = (props) => {
@@ -51,84 +63,111 @@ const ContactListItem = (props) => {
 
 
     return(
-        <tr className='list-item'>
-            <th className='align-middle'
-                scope="row">
-                {props.num}
-            </th>
-            <td className='align-middle'>
-                <img
-                    className="list-item__avatar"
-                    src={props.avatar}
-                    alt={props.name}
-                />
-            </td>
-            <td className='align-middle'>
-                {readonly?
-                    <span>{inputVal1}</span>
-                    :
-                    <input
-                        onChange={(event)=>{
-                        handlerChangeContactVal(event, setInputVal1)
-                }}
-                        type="text"
-                        className='form-control active'
-                        defaultValue={inputVal1}
+        <div className='list-item'>
+            <div className="list-item__head">
+                <div className='list-item__id'>
+                    <span className='list-item__title'>Id</span>
+                    <span className='list-item__value'>{props.num}</span>
+                </div>
+
+                <div className='list-item__image'>
+                <span className='list-item__value'>
+                    <img
+                        className="list-item__avatar"
+                        src={props.avatar}
+                        alt={props.name}
+                        onError={(event)=> {
+                            handleImgError(event, NoPhotoImage)
+                        }}
                     />
+                </span>
+                </div>
+
+                <div className='list-item__name'>
+                    <span className='list-item__value'>
+                    {readonly?
+                        <span>{inputVal1}</span>
+                        :
+                        <input
+                            onChange={(event)=>{
+                                handlerChangeContactVal(event, setInputVal1)
+                            }}
+                            type="text"
+                            className='form-control active'
+                            defaultValue={inputVal1}
+                        />
+                    }
+                </span>
+                </div>
+            </div>
 
 
-                }
-            </td>
-            <td className='align-middle' >
-                {readonly?
-                    <span>{inputVal2}</span>
-                    :
-                    <input
-                        onChange={(event)=>{
-                            handlerChangeContactVal(event, setInputVal2)
-                        }}
-                        className='form-control active'
-                        type="text"
-                        defaultValue={inputVal2}
-                    />
-                }
-            </td>
-            <td className='align-middle' >
-                {readonly?
-                    <span>{inputVal3}</span>
-                    :
-                    <input
-                        onChange={(event)=>{
-                            handlerChangeContactVal(event, setInputVal3)
-                        }}
-                        className='form-control active'
-                        type="text"
-                        defaultValue={inputVal3}
-                    />
-                }
-            </td>
-            <td className='align-middle'>
-                { readonly?
-                    <span>{inputVal4}</span>
-                    :
-                    <input
-                        onChange={(event)=>{
-                            handlerChangeContactVal(event, setInputVal4)
-                        }}
-                        className='form-control active'
-                        defaultValue={inputVal4}
-                    />
-                }
-            </td>
-            <td className='align-middle'>
+            <div className="list-item__content">
+                <div className='list-item__row'>
+                    <span className='list-item__title'>Email:</span>
+                    <span className='list-item__value'>
+                    {readonly?
+                        <span>{inputVal2}</span>
+                        :
+                        <input
+                            onChange={(event)=>{
+                                handlerChangeContactVal(event, setInputVal2)
+                            }}
+                            type="text"
+                            className='form-control active'
+                            defaultValue={inputVal2}
+                        />
+                    }
+                </span>
+                </div>
+
+
+                <div className='list-item__row'>
+                    <span className='list-item__title'>Phone:</span>
+                    <span className='list-item__value'>
+                    {readonly?
+                        <span>{inputVal3}</span>
+                        :
+                        <input
+                            onChange={(event)=>{
+                                handlerChangeContactVal(event, setInputVal4)
+                            }}
+                            type="text"
+                            className='form-control active'
+                            defaultValue={inputVal3}
+                        />
+                    }
+                </span>
+                </div>
+
+                <div className='list-item__row'>
+                    <span className='list-item__title'>Website:</span>
+                    <span className='list-item__value'>
+                    {readonly?
+                        <span>{inputVal4}</span>
+                        :
+                        <input
+                            onChange={(event)=>{
+                                handlerChangeContactVal(event, setInputVal4)
+                            }}
+                            type="text"
+                            className='form-control active'
+                            defaultValue={inputVal4}
+                        />
+                    }
+                </span>
+                </div>
+            </div>
+
+            <div className='list-item__edit'>
                 {readonly?
                     <ButtonEdit
                         handlerEventEdit={(event)=> {handlerEditVal(readonly, setReadonly )}}
                     />
                     :
                     <><ButtonSave
-                            handlerEventSave={(event)=> {handlerSaveVal(); handlerEditVal(readonly, setReadonly )}}
-                        />
+                        handlerEventSave={(event)=> {handlerSaveVal(); handlerEditVal(readonly, setReadonly )}}
+                    />
 
                         <ButtonCancel
                             handlerEventEdit={
@@ -137,8 +176,8 @@ const ContactListItem = (props) => {
                     </>
 
                 }
-            </td>
-        </tr>
+            </div>
+        </div>
     )
 }
 export default ContactListItem;

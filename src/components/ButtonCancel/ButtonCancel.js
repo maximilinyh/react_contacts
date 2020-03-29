@@ -4,7 +4,7 @@ import "./ButtonCancel.scss";
 const ButtonCancel = (props)=> {
     return(
         <button
-            className='btn btn-info mt-1'
+            className='btn btn-info ml-1'
             onClick={props.handlerEventEdit} >Cancel
         </button>
     );

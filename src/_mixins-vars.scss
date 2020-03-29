@@ -23,14 +23,11 @@ $container-max-widths: (
 
 //fonts
 $basic-font-family: "Roboto", sans-serif;
-$second-font-family: "Montserrat", sans-serif;
-$title-font-family: "Kaushan Script", cursive;
 
 //colors
 $main: #999999;
-$fir-red: #ed1c40;
-$fir-dark: #333;
-$fir-grey: #f8f8f8;
+$fir-red: #f47564;
+
 
 //mixins
 @mixin button-variant($color, $background, $border, $border-width) {

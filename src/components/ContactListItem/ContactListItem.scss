@@ -3,22 +3,72 @@
 
 .list-item {
   font-size: 0.8rem;
+  border-bottom: 1px #e4e4e4 solid;
+
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  &__id, &__image, &__name {
+    margin-right: 1rem;;
+  }
+
+  &__value {
+    word-break: break-all;
+  }
+
+
+  &__name {
+    font-size: 1.389rem;
+    color: $fir-red;
+  }
+
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+    .list-item__row {
+      margin-right: 2rem;
+        .form-control {
+          margin: 5px 0;
+        }
+    }
+  }
+
+  &__edit {
+    text-align: right;
+    margin-top: 1rem;
+
+  }
+
+  &__id {
+    background-color: $fir-red;
+    color: #fff;
+    display: inline-block;
+    padding: 5px;
+    flex: 0 0 auto;
+  }
+  &__title {
+    padding-right: 0.2rem;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
   &__input {
     border: none;
     background-color: transparent;
     outline: none;
   }
 
-span {
-  display: block;
-}
   &__avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 40px;
+    width: 2.222rem;
+    height: 2.222rem;
+    flex: 0 0 auto;
+    border-radius: 2.222rem;
   }
   .btn {
-    display: block;
     width: 100px;
   }
 }

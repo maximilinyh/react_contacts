@@ -5,11 +5,12 @@ import "./ContactList.scss";
 import { Container } from "react-bootstrap";
 import axios from 'axios';
 import LocalStorage from "../../LocalStorage";
+import {IoMdFunnel} from "react-icons/io";
 
-
+//instance LocalStorage Class
 const storage = new LocalStorage('data');
-console.log(localStorage)
 
+//sort handler fn
 function sortByName(arr) {
     return arr.sort((a, b)=>{
         let nameA= a.name.toLowerCase(),
@@ -27,11 +28,13 @@ function sortByName(arr) {
 function handlerSearchContact (event, setVal) {
     setVal(event.target.value.trim().toLowerCase());
 }
-
+//render ContactList
 const  ContactList = () => {
-    //hook search value
+
+    //search state
     const [searchVal, setSearchVal] = useState('');
 
+    //sort state
     const [sortState, setSortState] = useState(true);
 
     // data query
@@ -56,7 +59,7 @@ const  ContactList = () => {
     //storageData array
     const storageData = storage.getStorage();
 
-//storageData
+//default list
     const contactItems = storageData.filter(({name}) => name.toLowerCase().match( searchVal )).map((item) => (
         <ContactListItem
             id={item.id}
@@ -70,7 +73,7 @@ const  ContactList = () => {
         </ContactListItem>
     ))
 
-
+//sort list
     const contactItemsSort = sortByName(storageData).filter(({name}) => name.toLowerCase().match( searchVal )).map((item) => (
         <ContactListItem
             id={item.id}
@@ -85,10 +88,10 @@ const  ContactList = () => {
     ))
 
 
-
     //render component
     return (
             <Container>
+                {/*toolbar*/}
                 <div className="contact-toolbar">
                     <Search
                         onSearchHandler={(event)=> {handlerSearchContact(event, setSearchVal)}}
@@ -96,29 +99,14 @@ const  ContactList = () => {
                     />
                     <button onClick={()=> {
                         setSortState(!sortState);
-                    }} className='contact-toolbar__sort btn btn-info'>  {!sortState ?
-                        'Sort by number' : 'Sort by first letter'}
+                    }} className='contact-toolbar__sort btn btn-outline-light'> <IoMdFunnel/> <span>{!sortState ?
+                        'Sort by ID' : 'Sort by first letter'}</span>
                     </button>
 
                 </div>
-
-                <div className='contact-list table-responsive '>
-                    <table className="table table-striped">
-                        <thead className='thead-dark'>
-                        <tr>
-                            <th scope="col">№</th>
-                            <th scope="col">Avatar</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Website</th>
-                            <th scope="col">Edit</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                {/*table*/}
+                <div className='contact-list'>
                         {!sortState ? contactItemsSort : contactItems}
-                        </tbody>
-                    </table>
                 </div>
             </Container>
     );
